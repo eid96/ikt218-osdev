@@ -71,8 +71,7 @@ void irq_handler(registers_t regs)                              // called when I
     if (interrupt_handlers[regs.int_no] != 0)                  // if interrupt handler is not null, call it
     {
         isr_t handler = interrupt_handlers[regs.int_no];       // get the interrupt handler
-        handler(*regs);                            // call the interrupt handler
+        handler(regs);                            // call the interrupt handler
     }
 
 }
-

@@ -3,7 +3,7 @@ extern "C"{
     #include "../include/descriptor_tables.h"
     #include "../include/common.h"
     #include "../include/monitor.h"
-    //#include "../include/isr.h"
+    
     #include "../include/keyboard.h"
 
 }
@@ -26,14 +26,22 @@ void kernel_main()
     asm volatile ("int $0x3");
     asm volatile ("int $0x4");
     asm volatile("sti");
+    kb_init();
+   if (read_pos != write_pos) {
+            unsigned char kb_data = read_scancode();
+            int event = kb_event_type(kb_data);
 
-Keyboard::hook_keyboard([](uint8_t scancode, void* context){
-        //auto* os = (OperatingSystem*)context;
-        monitor_write("Print stuff"); 
-        //monitor_put(scancode); 
-        //monitor_write(")");
-        //monitor_write("/n");
-    }, NULL);
+            if (event == KEY_PRESS) {
+                handle_key_press(kb_data);
+            } else if (event == KEY_RELEASE) {
+                handle_key_release(kb_data);
+            }
+        }
+    
+   
+
+
+
 
     //clear_screen();
     //write_string("Hello, World!");
