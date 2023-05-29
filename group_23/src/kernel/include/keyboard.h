@@ -2,6 +2,7 @@
 #define KEYBOARD_H
 #include "isr.h"
 #include "monitor.h"
+
 // Define the keyboard data port
 #define KB_DATA_PORT 0x60
 
@@ -15,17 +16,17 @@
 #define KEY_PRESS 1
 #define KEY_RELEASE 0
 
-// Size of the keyboard buffer
+// Size of keyboard buffer
 #define K_BUFFER_SIZE 256
 
 // Keyboard buffer
 static unsigned char k_buffer[K_BUFFER_SIZE];
 
 
-// Position of the next scancode to be read from the buffer
+// Position of the next scancode be read from the buffer
 static int read_pos = 0;
 
-// Position of the next scancode to be written to the buffer
+// Position of next scancode to be written to buffer
 static int write_pos = 0;
 
 static unsigned char read_scancode(void)
@@ -34,22 +35,22 @@ static unsigned char read_scancode(void)
     read_pos = (read_pos + 1) % K_BUFFER_SIZE;
     return scancode; 
 }
-// Function to initialize the keyboard
+// Initializes the keyboard
 void kb_init(void);
 
-// Function to handle a keyboard interrupt
+// Handles keyboard interrupts
 void kb_irq_handler(registers_t regs);
 
-// Function to check for errors in keyboard data
+// Checks for errors in keyboard data
 int kb_errors_check(unsigned char data);
 
-// Function to get the type of a keyboard event
+// Gets keyboard events
 int kb_event_type(unsigned char data);
 
-// Function to handle a key press event
+// Handle  key press events
 void handle_key_press(unsigned char data);
 
-// Function to handle a key release event
+//handles key release events
 void handle_key_release(unsigned char scancode);
 
 #endif // KEYBOARD_H

@@ -40,7 +40,7 @@ void kb_irq_handler(registers_t regs)
 }
 void handle_key_press(unsigned char scancode)
 {
-    // If the scancode is within the range of the array
+    // If the scancode is range of array
     if (scancode < sizeof(sc_ascii)) 
     {
         // Get the corresponding ASCII value
